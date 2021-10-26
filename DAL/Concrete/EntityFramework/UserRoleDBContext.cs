@@ -6,8 +6,9 @@ using System.Text;
 
 namespace DAL.Concrete.EntityFramework
 {
-    public class NetCoreUserRoleContext : DbContext
+    public class UserRoleDBContext : DbContext
     {
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=ReCap;Trusted_Connection=true");

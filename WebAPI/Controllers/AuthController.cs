@@ -14,21 +14,21 @@ namespace WebAPI.Controllers
     public class AuthController : ControllerBase
     {
 
-        private IAuthService authService;
+        private IAuthService _authService;
 
         public AuthController(IAuthService authService)
         {
-            this.authService = authService;
+            _authService = authService;
         }
         [HttpPost("login")]
         public ActionResult Login(UserForLoginDto userForLoginDto)
         {
-            var userToLogin = authService.Login(userForLoginDto);
+            var userToLogin = _authService.Login(userForLoginDto);
             if (!userToLogin.Success)
             {
                 return BadRequest(userToLogin.Message);
             }
-            var result = authService.CreateAccessToken(userToLogin.Data);
+            var result = _authService.CreateAccessToken(userToLogin.Data);
             if (result.Success)
             {
                 return Ok(result.Data);
@@ -37,17 +37,16 @@ namespace WebAPI.Controllers
 
         }
 
-
         [HttpPost("register")]
         public ActionResult Register(UserForRegisterDto userForRegisterDto)
         {
-            var userExists = authService.UserExists(userForRegisterDto.Email);
+            var userExists = _authService.UserExists(userForRegisterDto.Email);
             if (!userExists.Success)
             {
                 return BadRequest(userExists.Message);
             }
-            var registerResult = authService.Register(userForRegisterDto, userForRegisterDto.Password);
-            var result = authService.CreateAccessToken(registerResult.Data);
+            var registerResult = _authService.Register(userForRegisterDto, userForRegisterDto.Password);
+            var result = _authService.CreateAccessToken(registerResult.Data);
             if (result.Success)
             {
                 return Ok(result.Data);

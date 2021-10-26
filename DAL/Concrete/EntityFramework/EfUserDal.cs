@@ -8,11 +8,11 @@ using System.Linq;
 
 namespace DAL.Concrete.EntityFramework
 {
-    public class EfUserDal : EfEntityRepositoryBase<User, NetCoreUserRoleContext>, IUserDal
+    public class EfUserDal : EfEntityRepositoryBase<User, UserRoleDBContext>, IUserDal
     {
         public List<OperationClaim> GetClaims(User user)
         {
-            using (var context = new NetCoreUserRoleContext())
+            using (var context = new UserRoleDBContext())
             {
                 var result = from operationClaim in context.OperationClaims
                              join userOperationClaim in context.UserOperationClaims
